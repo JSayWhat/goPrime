@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Prime Finder</title>
+		<style>
+				:root {
+					--background-color: #121212;
+					--text-color: #e0e0e0;
+					--form-background: #1e1e1e;
+					--form-border: #333;
+					--button-background: #28a745;
+					--button-hover: #218838;
+					--label-color: #bbb;
+					--input-background: #333;
+					--input-border: #555;
+					--input-text: #e0e0e0;
+					--list-background: #1e1e1e;
+					--list-border: #333;
+					--list-shadow: rgba(0, 0, 0, 0.5);
+				}
+			
+			 html, body {
+      	height: 100%;
+      	margin: 0;
+      	display: flex;
+      	flex-direction: column;
+				font-family: Arial, sans-serif;
+				min-height: 100vh;
+    	}
+			
+			.container {
+				max-width: 1024px;
+				min-height: 100%;
+				width: 100%;
+				box-sizing: border-box;
+				display: grid;
+				align-items: center;
+				margin: auto;
+				grid-template-columns: 1fr;
+				grid-gap: 20px;
+			}
+			h1 {
+				color: var(--text-color);
+			}
+
+			label {
+				display: block;
+				margin-bottom: 5px;
+				color: var(--label-color);
+			}
+
+			h2 {
+				color: var(--text-color);
+			}
+
+			p {
+				color: var(--text-color);
+			}
+			 .hidden {
+            display: none;
+        }
+
+			@media (max-width: 640px) {
+  /* Styles for phones */
+  .container {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  h1, h2, p, label {
+    font-size: 1rem;
+  }
+
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* Adjust button sizes */
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  /* Styles for tablets */
+  .container {
+    max-width: 90%;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2, p, label {
+    font-size: 1.25rem;
+  }
+
+  /* Adjust button sizes */
+  button {
+    width: auto;
+    margin-bottom: 5px;
+  }
+}
+
+		</style>
+		<link
+			href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css"
+			rel="stylesheet"
+			type="text/css"
+		/>
+		<script src="https://cdn.tailwindcss.com"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="navbar rounded-xl">
+				<div class="flex-1">
+					<h1 class="text-3xl font-semibold text-primary text-center p-3 mt-3">Lucky Prime</h1>
+				</div>
+				<div class="flex-none">
+					<a class="btn btn-ghost" href="https://github.com">
+  					<svg
+    					xmlns="http://www.w3.org/2000/svg"
+    					width="24"
+    					height="24"
+    					viewBox="0 0 24 24"
+    					class="fill-current">
+    					<path
+      				d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.11.82-.26.82-.577v-2.165c-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.084 1.84 1.24 1.84 1.24 1.07 1.835 2.807 1.305 3.492.997.108-.775.418-1.305.76-1.605-2.665-.305-5.466-1.335-5.466-5.93 0-1.31.467-2.38 1.235-3.22-.123-.305-.535-1.54.117-3.205 0 0 1.008-.322 3.3 1.23.957-.266 1.98-.398 3-.403 1.02.005 2.043.137 3 .403 2.29-1.552 3.297-1.23 3.297-1.23.653 1.665.242 2.9.12 3.205.77.84 1.235 1.91 1.235 3.22 0 4.61-2.803 5.62-5.475 5.92.43.37.81 1.1.81 2.22v3.293c0 .32.218.694.825.577C20.565 21.795 24 17.3 24 12c0-6.63-5.37-12-12-12z"></path>
+  					</svg>
+					</a>
+				</div>
+			</div>
+			<div class="hero min-fit-content">
+				<div class="hero-content m-0 p-6">
+					<div class="text-center sm:text-left md:text-left">
+						<h1 class="text-3xl font-semibold py-3">Prime Number Finder</h1>
+						<div class="text-lg font-light py-4">
+							<p>
+								Welcome to the Prime Number Finder! This tool allows you to find
+								prime numbers within a given range. You can specify the minimum
+								and maximum values, as well as the maximum number of prime
+								numbers to return.
+							</p>
+						</div>
+						<b />
+						<button class="btn btn-primary mt-3" onclick="my_modal_1.showModal()">
+							Facts About Prime Numbers
+						</button>
+						<dialog id="my_modal_1" class="modal">
+							<div class="modal-box">
+								<h3 class="text-lg font-bold text-primary">PRIME NUMBERS</h3>
+										<div class="py-6 text-left font-light">
+							<ul>
+								<li>
+									<h3 class="font-semibold py-1 underline">Definition:</h3>
+									
+									<p>
+										A prime number is a natural number greater than 1 that has
+										no positive divisors other than 1 and itself. For example,
+										2, 3, 5, 7, and 11 are prime numbers.
+									</p>
+								</li>
+								<br />
+								<li>
+									<h3 class="font-semibold py-1 underline">Unique Role in Mathematics:</h3>
+									<p>
+									Prime numbers are often referred to as the "building blocks"
+									of the integers because any integer greater than 1 can be
+									factored into primes in a unique way, ignoring the order of
+									the factors. This is known as the Fundamental Theorem of
+									Arithmetic.</p>
+								</li>
+								<br />
+								<li>
+									<h3 class="font-semibold py-1 underline">Infinitude of Primes:</h3>
+									<p>There are infinitely many prime numbers. This was first proven
+									by the ancient Greek mathematician Euclid around 300 BCE. The
+									proof involves assuming the opposite and showing that it leads
+									to a contradiction.</p>
+								</li>
+								<br />
+								<li>
+									<h3 class="font-semibold py-1 underline">Prime Number Distribution:</h3>
+									<p>prime numbers become less frequent as numbers get
+									larger, they never stop appearing. The distribution of primes
+									among the natural numbers is a central topic in number theory,
+									with important results like the Prime Number Theorem, which
+									approximates the number of primes less than a given number.</p>
+								</li>
+							</ul>
+								<div class="modal-action">
+									<form method="dialog">
+										<button class="btn">Close</button>
+									</form>
+								</div>
+							</div>
+						</dialog>
+					</div>
+				</div>
+			</div>
+			<br />
+			<main class="grid grid-cols-1 gap-4 mb-12">	
+			<div class="card bg-base-100 w-auto shadow-xl">
+				<div class="card-body">
+					<h2 class="card-title">Prime Number Finder</h2>
+					<form id="prime-form">
+						<label for="min">Minimum Value:</label>
+						<span id="range-value-min">1</span>
+						<input
+							type="range"
+							class="range range-primary"
+							id="min"
+							name="min"
+							min="0"
+							max="10000"
+							value="1"
+							class="range"
+							step="10"
+							oninput="updateRangeValueMin(this.value)"
+						/>
+						<div class="flex w-full justify-between px-2 text-xs hidden">
+							<span>0</span>
+							<span>500</span>
+							<span>1000</span>
+							<span>1500</span>
+							<span>2000</span>
+							<span>2500</span>
+							<span>3000</span>
+							<span>3500</span>
+							<span>4000</span>
+							<span>4500</span>
+							<span>5000</span>
+							<span>5500</span>
+							<span>6000</span>
+							<span>6500</span>
+							<span>7000</span>
+							<span>7500</span>
+							<span>8000</span>
+							<span>8500</span>
+							<span>9000</span>
+							<span>9500</span>
+							<span>10000</span>
+						</div>
+						<br />
+						<label for="max">Maximum Value:</label>
+						<span id="range-value-max">100</span>
+						<input
+							type="range"
+							class="range range-error"
+							id="max"
+							name="max"
+							min="100"
+							max="1000000"
+							value="100"
+							class="range"
+							step="100"
+							oninput="updateRangeValueMax(this.value)"
+						/>
+						<div class="flex w-full justify-between px-2 text-xs hidden">
+							<span>100</span>
+							<span>5K</span>
+							<span>10K</span>
+							<span>15K</span>
+							<span>20K</span>
+							<span>25K</span>
+							<span>30K</span>
+							<span>35K</span>
+							<span>40K</span>
+							<span>45K</span>
+							<span>50K</span>
+							<span>55K</span>
+							<span>60K</span>
+							<span>65K</span>
+							<span>70K</span>
+							<span>75K</span>
+							<span>80K</span>
+							<span>85K</span>
+							<span>90K</span>
+							<span>95K</span>
+							<span>100K</span>
+							<span>200K</span>
+							<span>300K</span>
+							<span>400K</span>
+							<span>500K</span>
+							<span>600K</span>
+							<span>700K</span>
+							<span>800K</span>
+							<span>900K</span>
+							<span>1M</span>
+						</div>
+						<br />
+						<label for="max_primes_count">Maximum Primes to Return:</label>
+						<span id="range-value-return">1</span>
+						<input
+							type="range"
+							class="range range-info"
+							id="max_primes_count"
+							name="max_primes_count"
+							min="1"
+							max="100"
+							value="1"
+							class="range"
+							step="1"
+							oninput="updateRangeValueReturn(this.value)"
+						/>
+						<div class="flex w-full justify-between px-2 text-xs hidden">
+							<span>1</span>
+							<span>5</span>
+							<span>10</span>
+							<span>15</span>
+							<span>20</span>
+							<span>25</span>
+							<span>30</span>
+							<span>35</span>
+							<span>40</span>
+							<span>45</span>
+							<span>50</span>
+							<span>55</span>
+							<span>60</span>
+							<span>65</span>
+							<span>70</span>
+							<span>75</span>
+							<span>80</span>
+							<span>85</span>
+							<span>90</span>
+							<span>95</span>
+							<span>100</span>
+						</div>
+						<div role="alert" id="error-alert" class="alert alert-warning hidden mt-4">
+  						<svg
+    						xmlns="http://www.w3.org/2000/svg"
+    						class="h-6 w-6 shrink-0 stroke-current"
+    						fill="none"
+    						viewBox="0 0 24 24">
+    						<path
+     	 					stroke-linecap="round"
+      					stroke-linejoin="round"
+      					stroke-width="2"
+      					d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+  						</svg>
+  						<span id="error-message"></span>
+						</div>
+						
+						<div class="card-actions justify-start py-6">
+							<button id="primeFinderButton" class="btn btn-outline btn-primary" type="submit">
+								Find Primes
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="stats shadow w-full">
+				<div class="stat" id="results">
+					<div class="stat-title text-warning py-4">Your Random Prime Number</div>
+					<div class="stat-value" id="random_prime_number"></div>
+					<div class="stat-desc text-warning py-4">#Lucky Prime Number</div>
+				</div>
+			</div>
+			<div class="stats stats-vertical shadow w-full">
+				<div class="stat">
+					<div class="stat-title text-error">Range of Prime Numbers</div>
+					<div class="stat-value list-none py-2" id="primes"></div>
+					<div class="stat-desc text-error py-4">*End of your Prime Numbers*</div>
+				</div>
+			</div>
+			</main>
+		<footer class="footer text-neutral-content items-center p-4">
+  <aside class="grid-flow-col items-center">
+    <svg
+      width="36"
+      height="36"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      class="fill-current">
+      <path
+        d="M22.672 15.226l-2.432.811.841 2.515c.33 1.019-.209 2.127-1.23 2.456-1.15.325-2.148-.321-2.463-1.226l-.84-2.518-5.013 1.677.84 2.517c.391 1.203-.434 2.542-1.831 2.542-.88 0-1.601-.564-1.86-1.314l-.842-2.516-2.431.809c-1.135.328-2.145-.317-2.463-1.229-.329-1.018.211-2.127 1.231-2.456l2.432-.809-1.621-4.823-2.432.808c-1.355.384-2.558-.59-2.558-1.839 0-.817.509-1.582 1.327-1.846l2.433-.809-.842-2.515c-.33-1.02.211-2.129 1.232-2.458 1.02-.329 2.13.209 2.461 1.229l.842 2.515 5.011-1.677-.839-2.517c-.403-1.238.484-2.553 1.843-2.553.819 0 1.585.509 1.85 1.326l.841 2.517 2.431-.81c1.02-.33 2.131.211 2.461 1.229.332 1.018-.21 2.126-1.23 2.456l-2.433.809 1.622 4.823 2.433-.809c1.242-.401 2.557.484 2.557 1.838 0 .819-.51 1.583-1.328 1.847m-8.992-6.428l-5.01 1.675 1.619 4.828 5.011-1.674-1.62-4.829z"></path>
+    </svg>
+    <p>99 Problems Dev © <p id="date"></p> - All right reserved</p>
+  </aside>
+  <nav class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
+    <a href="https://twitter.com">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter-x" viewBox="0 0 16 16">
+  <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/>
+</svg>
+</a>
+</a>
+    <a href="https://github.com">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    class="fill-current">
+    <path
+      d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.11.82-.26.82-.577v-2.165c-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.084 1.84 1.24 1.84 1.24 1.07 1.835 2.807 1.305 3.492.997.108-.775.418-1.305.76-1.605-2.665-.305-5.466-1.335-5.466-5.93 0-1.31.467-2.38 1.235-3.22-.123-.305-.535-1.54.117-3.205 0 0 1.008-.322 3.3 1.23.957-.266 1.98-.398 3-.403 1.02.005 2.043.137 3 .403 2.29-1.552 3.297-1.23 3.297-1.23.653 1.665.242 2.9.12 3.205.77.84 1.235 1.91 1.235 3.22 0 4.61-2.803 5.62-5.475 5.92.43.37.81 1.1.81 2.22v3.293c0 .32.218.694.825.577C20.565 21.795 24 17.3 24 12c0-6.63-5.37-12-12-12z"></path>
+  </svg>
+</a>
+  </nav>
+</footer>
+		</div>
+		<script>
+			function updateDate() {
+				document.getElementById("date").innerHTML = new Date().getFullYear();
+				return new Date().getFullYear();
+			}
+
+			window.addEventListener("load", updateDate);
+			
+
+			function updateRangeValueMin(value) {
+				document.getElementById("range-value-min").textContent = value;
+			}
+			function updateRangeValueMax(value) {
+				document.getElementById("range-value-max").textContent = value;
+			}
+			function updateRangeValueReturn(value) {
+				document.getElementById("range-value-return").textContent = value;
+			}
+
+			document
+				.getElementById("prime-form")
+				.addEventListener("submit", function (event) {
+					event.preventDefault();
+					const button = document.querySelector("#primeFinderButton[type='submit']");
+        button.disabled = true;
+					setTimeout(() => {
+						button.disabled = false;
+					}, 10000);
+
+					const min = document.getElementById("min").value;
+					const max = document.getElementById("max").value;
+					const maxPrimesCount =
+						document.getElementById("max_primes_count").value;
+
+					const requestData = {
+						min: parseInt(min),
+						max: parseInt(max),
+						max_primes_count: parseInt(maxPrimesCount),
+					};
+
+					fetch("/random", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify(requestData),
+					})
+					.then((response) => response.json())
+					.then((data) => {
+						const errorAlert = document.getElementById("error-alert");
+            const errorMessage = document.getElementById("error-message");
+							if (data.error) {
+                errorMessage.textContent = data.error;
+                errorAlert.classList.remove('hidden');
+            } else {
+                errorAlert.classList.add('hidden');
+                document.getElementById("random_prime_number").textContent = data.random_prime_number;
+                const primesList = document.getElementById("primes");
+                primesList.innerHTML = ""; // Clear the list
+
+                data.primes.forEach((prime) => {
+                const li = document.createElement("li");
+                li.textContent = prime;
+                primesList.appendChild(li);
+                });
+              }
+            })
+              .catch((error) => {
+              console.error("Error:", error);
+              const errorAlert = document.getElementById("error-alert");
+              const errorMessage = document.getElementById("error-message");
+              errorMessage.textContent = "An unexpected error occurred.";
+              errorAlert.classList.remove('hidden');
+              });
+          });
+
+		</script>
+	</body>
+</html>
