@@ -240,8 +240,7 @@ err := json.NewDecoder(r.Body).Decode(&req)
 	defer close(done)
 
   randNumFetcher := func(min, max int) int { return generateUniqueRandomNumber(min, max) }
-	// randNumFetcher := func(min, max int) int { return rand.Intn(max-min+1) + min }
-
+	
 	randIntStream := repeatFunc(done, func() int { return randNumFetcher(min, max) }, ctx)
 
 	// channel fanned out
