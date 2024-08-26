@@ -9,7 +9,7 @@ GOGET = $(GOCMD) get
 # Build target
 BINARY_NAME = goPrime
 
-all: test build
+all: test build run
 
 run:
 	@echo "Running the application..." 

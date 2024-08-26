@@ -156,6 +156,8 @@ type Response struct {
 }
 
 func main() {
+	CPUCount := runtime.NumCPU()
+	fmt.Println("Number of CPUs:", CPUCount)
 	http.HandleFunc("/", handleHTML)
 	http.HandleFunc("/random", randomHandler)
   fmt.Println("Server is running on port 8080")
