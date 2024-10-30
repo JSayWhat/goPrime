@@ -6,18 +6,27 @@ GOCLEAN = $(GOCMD) clean
 GOTEST = $(GOCMD) test
 GOGET = $(GOCMD) get
 
+# OS-specific binary extension
+OS = $(shell uname -s)
+ifeq ($(OS),Windows_NT)
+    EXT = .exe
+else
+    EXT =
+endif
+
 # Build target
-BINARY_NAME = goPrime
+BINARY_NAME = goPrime$(EXT)
+BUILD_PATH = cmd/$(BINARY_NAME)
 
 all: test build run
 
 run:
 	@echo "Running the application..." 
-	./$(BINARY_NAME)
+	./$(BUILD_PATH)
 
 build:
 	@echo "Building the application..."
-	$(GOBUILD) -o $(BINARY_NAME) -v
+	$(GOBUILD) -o $(BUILD_PATH) -v 
 
 test:
 	@echo "Testing..."
@@ -26,6 +35,6 @@ test:
 clean:
 	@echo "Cleaning up..."
 	$(GOCLEAN)
-	rm -f $(BINARY_NAME)
+	rm -f $(BUILD_PATH)
 
 .PHONY: all build test clean run
