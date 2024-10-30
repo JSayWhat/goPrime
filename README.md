@@ -25,7 +25,7 @@ This project is a Go application that demonstrates the use of channels, goroutin
 
 2. Build the project:
    ```sh
-   go build -o main main.go
+   make build
    ```
 
 ## Usage
@@ -33,7 +33,7 @@ This project is a Go application that demonstrates the use of channels, goroutin
 1. Run the application:
 
    ```sh
-   ./main
+   make run
    ```
 
 2. The application will start and demonstrate the concurrent features implemented.
